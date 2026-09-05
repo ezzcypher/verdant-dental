@@ -239,6 +239,35 @@ describe("rules engine behaviour", () => {
   });
 });
 
+describe("chat widget markup", () => {
+  test("renders collapsed - the panel is absent until the launcher is clicked", async () => {
+    const html = await (await fetch(rulesApp.base)).text();
+
+    // Regression guard: the panel used to be hidden with the `hidden`
+    // attribute while also carrying Tailwind's `flex` class. An author
+    // display rule beats the UA stylesheet's [hidden]{display:none}, so the
+    // panel rendered permanently open on every page load.
+    assert.ok(
+      !html.includes("Ask about treatments, prices or booking"),
+      "the composer must not be in the initial HTML - the panel should be collapsed",
+    );
+    assert.ok(
+      !html.includes("Typically replies instantly"),
+      "the panel header must not be in the initial HTML",
+    );
+    assert.ok(
+      !/hidden=""[^>]*vd-chat-panel|vd-chat-panel[^>]*hidden=""/.test(html),
+      "the panel must be conditionally rendered, not hidden with the hidden attribute",
+    );
+
+    // The launcher itself must still be there, as a round icon button.
+    assert.ok(
+      html.includes("Chat with our receptionist"),
+      "the launcher button must be present so the widget can be opened",
+    );
+  });
+});
+
 describe("urgency detection", () => {
   const URGENT = [
     "my face is swollen and it is bleeding badly",

@@ -132,7 +132,8 @@ export function ChatWidget() {
 
   return (
     <>
-      {/* Launcher */}
+      {/* Launcher — a single round button that also closes the panel, so it is
+          always reachable even when the panel is full-screen on a phone. */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -140,29 +141,35 @@ export function ChatWidget() {
         aria-controls="vd-chat-panel"
         aria-label={open ? "Close the chat" : "Chat with our receptionist"}
         className={cn(
-          "fixed bottom-5 right-5 z-[60] flex h-14 items-center gap-2.5 rounded-full px-5",
+          "fixed bottom-5 right-5 z-[70] flex h-14 w-14 items-center justify-center rounded-full",
           "bg-primary text-primary-foreground shadow-[0_12px_40px_-8px_rgba(20,20,25,0.45)]",
-          "transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-none",
+          "transition-transform duration-200 hover:scale-105 focus-visible:outline-none",
           "focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2",
-          open && "scale-0 opacity-0 pointer-events-none",
         )}
       >
-        <MessageCircle className="h-5 w-5" strokeWidth={1.8} />
-        <span className="text-[13px] font-medium">Ask us anything</span>
+        {open ? (
+          <X className="h-6 w-6" strokeWidth={1.9} />
+        ) : (
+          <MessageCircle className="h-6 w-6" strokeWidth={1.8} />
+        )}
       </button>
 
-      {/* Panel */}
+      {/* Panel — conditionally rendered, never just `hidden`. The hidden
+          attribute is a UA-stylesheet `display:none`, which any author
+          `display:flex` overrides, so the panel would sit permanently open. */}
+      {open && (
       <div
         id="vd-chat-panel"
         ref={panelRef}
         role="dialog"
         aria-label="Chat with the Verdant receptionist"
         aria-modal="false"
-        hidden={!open}
         className={cn(
           "fixed z-[60] flex flex-col overflow-hidden border border-border bg-card shadow-2xl",
-          "inset-x-3 bottom-3 top-3 rounded-2xl",
-          "sm:inset-auto sm:bottom-5 sm:right-5 sm:top-auto sm:h-[min(620px,calc(100vh-2.5rem))] sm:w-[min(400px,calc(100vw-2.5rem))]",
+          "animate-fade-up",
+          // Sits above the launcher so the round button stays tappable.
+          "inset-x-3 bottom-24 top-3 rounded-2xl",
+          "sm:inset-auto sm:bottom-24 sm:right-5 sm:top-auto sm:h-[min(600px,calc(100vh-8rem))] sm:w-[min(400px,calc(100vw-2.5rem))]",
         )}
       >
         {/* Header */}
@@ -275,6 +282,7 @@ export function ChatWidget() {
           </p>
         </form>
       </div>
+      )}
     </>
   );
 }
