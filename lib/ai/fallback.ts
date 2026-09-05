@@ -53,13 +53,20 @@ function awaiting(lastAssistant: string): Awaiting {
  * Detail extraction
  * ------------------------------------------------------------------ */
 
+/**
+ * Words that disqualify a phrase from being a person's name. Question words
+ * matter as much as the obvious ones: "how much is whitening" has no question
+ * mark, is all letters, and would otherwise sail through as a name.
+ */
 const NON_NAME =
-  /\b(yes|no|yeah|yep|nope|ok|okay|hi|hello|hey|thanks|thank you|please|sure|maybe|help|book|appointment|price|cost|pain|hurts?)\b/i;
+  /\b(yes|no|yeah|yep|nope|ok|okay|hi|hello|hey|thanks|thank you|please|sure|maybe|help|book|booking|appointment|price|prices|cost|costs|pain|hurts?|how|what|when|where|why|who|which|whose|can|could|would|should|do|does|did|is|are|am|was|were|much|many|any|your|you|the|and|for|with|about|need|want|have|has|tell|show|give)\b/i;
 
 function looksLikeName(s: string): boolean {
   const t = s.trim();
   if (!/^[A-Za-z][A-Za-z'\-. ]{1,48}$/.test(t)) return false;
-  if (t.split(/\s+/).length > 4) return false;
+  // Real names given to a receptionist are one to three words.
+  const words = t.split(/\s+/);
+  if (words.length > 3) return false;
   if (NON_NAME.test(t)) return false;
   return true;
 }
@@ -332,7 +339,12 @@ export async function runFallback(args: RunFallbackArgs): Promise<ReceptionistRe
 
   // A bare name arriving mid-booking is a name, even when the previous question
   // was about something else. Without this the flow stalls on "Priya Raman".
-  if (!collected.patientName && looksLikeName(text) && (collected.treatment || want)) {
+  //
+  // Gated on the message carrying no clear intent of its own: a question like
+  // "how much is whitening" must be answered, never mistaken for a name just
+  // because a treatment is already on file.
+  const speculativeName = intent === "unknown" || intent === "affirm" || want === "name";
+  if (!collected.patientName && speculativeName && looksLikeName(text) && (collected.treatment || want)) {
     collected.patientName = text.trim();
   }
 

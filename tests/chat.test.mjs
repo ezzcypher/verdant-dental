@@ -39,6 +39,13 @@ before(async () => {
     }),
     startApp({ port: RULES_PORT, env: { ...noKeyEnv, ANTHROPIC_API_KEY: "" } }),
   ]);
+
+  // Warm both apps before asserting on anything. The first request pays for
+  // Prisma's cold connect to Neon, and letting the first real test absorb that
+  // made it flaky - it intermittently timed out into the fallback engine and
+  // failed on a reply that was correct, just produced by the wrong engine.
+  await Promise.all([chat(claudeApp.base, "warmup"), chat(rulesApp.base, "warmup")]);
+  mock.reset();
 });
 
 after(async () => {
@@ -213,6 +220,30 @@ describe("rules engine behaviour", () => {
     assert.ok(
       r.reply.includes(whitening.priceFrom),
       `reply must quote the DB price ${whitening.priceFrom}, got: ${r.reply}`,
+    );
+  });
+
+  test("a question is never mistaken for a patient name", async () => {
+    // Regression: "how much is whitening" has no question mark and is all
+    // letters, so it slipped through the name heuristic and the bot replied
+    // "Thanks how much is whitening." while a treatment was already on file.
+    let sid;
+    const first = await chat(rulesApp.base, "I want teeth whitening");
+    sid = first.sessionId;
+
+    for (const q of ["how much is whitening", "what are your opening hours", "where are you"]) {
+      const r = await chat(rulesApp.base, q, sid);
+      assert.ok(
+        !/^Thanks /i.test(r.reply),
+        `"${q}" was treated as a name, got: ${r.reply}`,
+      );
+    }
+
+    const priced = await chat(rulesApp.base, "how much is whitening", sid);
+    const whitening = await prisma.treatment.findFirst({ where: { name: "Teeth Whitening" } });
+    assert.ok(
+      priced.reply.includes(whitening.priceFrom) || /open|Lindenhof/i.test(priced.reply),
+      `a price question must be answered, got: ${priced.reply}`,
     );
   });
 
