@@ -41,10 +41,16 @@ foreach ($n in $required) {
 }
 
 # ---- push to Vercel ----------------------------------------------------------
+# Secrets go up as --sensitive: Vercel stores them write-only, so they cannot be
+# read back out of the dashboard or the API afterwards. ALLOWED_ORIGINS and
+# AI_MODEL are plain config, not secrets.
+$plain = @("ALLOWED_ORIGINS", "AI_MODEL")
+
 foreach ($name in ($required + $optional)) {
   if (-not $vars.ContainsKey($name)) { Write-Host "  skip     $name (not set)"; continue }
+  $flag = if ($plain -contains $name) { "--no-sensitive" } else { "--sensitive" }
   foreach ($target in @("production", "preview")) {
-    $vars[$name] | npx --yes vercel@latest env add $name $target --force *> $null
+    $vars[$name] | npx --yes vercel@latest env add $name $target --force $flag --yes *> $null
     if ($LASTEXITCODE -eq 0) { Write-Host "  ok       $name [$target]" }
     else { Write-Host "  FAILED   $name [$target]" -ForegroundColor Red }
   }
