@@ -1,7 +1,45 @@
 # Verdant — Dental Atelier
 
-A minimal, luxury one-page site for a dental clinic. Next.js 15 (App Router) ·
-React 19 · TypeScript · Tailwind CSS · shadcn-style UI · Prisma + SQLite backend.
+A luxury dental-clinic site with a full backend, an AI receptionist that answers
+patient questions and books appointments, and an admin dashboard.
+
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · shadcn-style UI ·
+Prisma + **PostgreSQL (Neon)** · **Claude (`claude-opus-5`)**
+
+## Backend & AI receptionist
+
+**`POST /api/chat`** — the virtual receptionist.
+
+- Runs **Claude** with two write tools (`save_patient_details`, `book_appointment`)
+  through a manual tool loop, so it can complete a real booking mid-conversation.
+- The clinic catalogue (treatments, prices, dentists, policies) is loaded from the
+  database into the **cached** half of the system prompt; per-conversation state
+  sits in a second block after the cache breakpoint, so it can change every turn
+  without invalidating the prefix.
+- Prices and policies are only ever quoted from the database — the prompt forbids
+  inventing them, and editing a row in `/admin` is correct on the very next reply.
+- **Never dies:** with no `ANTHROPIC_API_KEY`, or on any API error, it silently
+  falls back to a deterministic rule-based engine that still answers from the
+  knowledge base and still completes bookings.
+- A keyword **urgency safety net** runs on every message regardless of engine, so
+  a dental emergency is surfaced even if the model is down.
+
+**Data model** — `Appointment`, `ContactMessage`, `ChatSession`, `ChatMessage`,
+`KnowledgeItem`, `Treatment`, `Dentist`, `AdminSession`.
+
+**Admin dashboard** (`/admin`) — appointments with status workflow, full chat
+transcripts with what the bot collected, contact messages, and editable
+treatments / dentists / knowledge base. Single operator account: scrypt-hashed
+password, opaque server-side sessions, `__Host-` cookie, origin checks and rate
+limiting on every mutating route.
+
+Two deliberate architecture choices, both learned the hard way:
+
+- `lib/env.ts` and `lib/prisma.ts` validate and construct **on first use, never at
+  module import**. Next.js imports every route module at build time, so a
+  top-level throw turns a runtime config problem into a deploy blocker.
+- Every value read from `process.env` is trimmed and de-quoted, because values
+  pasted into a dashboard routinely arrive wrapped in stray quotes.
 
 Palette: canvas `#F4F3F8`, signature green `#98BF0A`, cool near-black ink, soft
 `0.75rem` radius. Photography is greyscale, resolving to colour on hover.

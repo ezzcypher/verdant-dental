@@ -17,3 +17,5 @@ next-env.d.ts
 # local-only secrets and notes
 .env.ai
 ADMIN-CREDENTIALS.txt
+.vercel
+.env*
