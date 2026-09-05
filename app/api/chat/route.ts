@@ -15,6 +15,21 @@ import {
   readJson,
 } from "@/lib/http";
 
+/**
+ * Prisma and node:crypto need the Node runtime; on Edge this route would fail
+ * at import. Never rely on the default.
+ */
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+/**
+ * Vercel's default function timeout is 10s, which a Claude turn with tool calls
+ * can exceed. 60s is the Hobby-plan ceiling and comfortably above the SDK's own
+ * 40s per-request timeout, so a slow model degrades to the rules engine instead
+ * of the platform killing the function and returning a 504.
+ */
+export const maxDuration = 60;
+
 /** Chat is chattier than a form, so it gets its own, looser budget. */
 const CHAT_LIMIT = 20;
 const CHAT_WINDOW_MS = 60_000;

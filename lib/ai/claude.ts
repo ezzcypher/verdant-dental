@@ -15,10 +15,27 @@ const MAX_TOKENS = 2048;
 /** How much history to replay. Enough for context, bounded so cost stays flat. */
 const HISTORY_TURNS = 16;
 
+/**
+ * Per-request ceiling, in milliseconds (the TS SDK takes ms, unlike the Python
+ * one). Deliberately well under the route's maxDuration so a slow or hung API
+ * call throws here and degrades to the rules engine, rather than running the
+ * serverless function out of time and returning a 504 to the patient.
+ */
+const REQUEST_TIMEOUT_MS = 40_000;
+
+/** The only tool names that may ever execute. Derived from the definitions so
+ *  the two can never drift apart. */
+const ALLOWED_TOOL_NAMES = new Set(TOOL_DEFS.map((t) => t.name));
+
 let client: Anthropic | null = null;
+let clientKey: string | null = null;
 
 function getClient(apiKey: string): Anthropic {
-  if (!client) client = new Anthropic({ apiKey, maxRetries: 1 });
+  // Rebuild if the key changed (key rotation between warm invocations).
+  if (!client || clientKey !== apiKey) {
+    client = new Anthropic({ apiKey, maxRetries: 1, timeout: REQUEST_TIMEOUT_MS });
+    clientKey = apiKey;
+  }
   return client;
 }
 
@@ -106,6 +123,18 @@ export async function runClaude(args: RunClaudeArgs): Promise<ReceptionistResult
     for (const call of toolUses) {
       let out: string;
       try {
+        // Second gate on top of executeTool's own whitelist: only names this
+        // turn actually advertised can run, so a hallucinated or injected tool
+        // name can never reach the executor.
+        if (!ALLOWED_TOOL_NAMES.has(call.name)) {
+          results.push({
+            type: "tool_result",
+            tool_use_id: call.id,
+            content: `No such tool "${call.name}". Only ${[...ALLOWED_TOOL_NAMES].join(" and ")} exist.`,
+            is_error: true,
+          });
+          continue;
+        }
         out = await executeTool(call.name, call.input, toolCtx);
       } catch (err) {
         // A failed write must come back as a tool_result, not a thrown turn —

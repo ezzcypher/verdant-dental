@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
+import { adminFetch } from "./admin-client";
 import { LogoutButton } from "./logout-button";
 import { AppointmentsPanel } from "./appointments-panel";
 import { ConversationsPanel } from "./conversations-panel";
@@ -23,6 +24,13 @@ type TabId = (typeof TABS)[number]["id"];
 
 export function AdminDashboard() {
   const [tab, setTab] = useState<TabId>("appointments");
+  const [ai, setAi] = useState<{ aiMode: string; model: string | null } | null>(null);
+
+  useEffect(() => {
+    void adminFetch("/api/admin/status").then((r) => {
+      if (r.ok) setAi(r.data);
+    });
+  }, []);
 
   return (
     <div className="mx-auto w-full max-w-[1200px] px-5 py-8 md:px-8">
@@ -34,6 +42,19 @@ export function AdminDashboard() {
           <h1 className="mt-1 font-display text-3xl font-medium tracking-tightest text-foreground">
             Front desk
           </h1>
+          {ai && (
+            <p className="mt-2 flex items-center gap-2 text-[12px] text-muted-foreground">
+              <span
+                className={
+                  "h-1.5 w-1.5 rounded-full " +
+                  (ai.aiMode === "claude" ? "bg-primary" : "bg-amber-500")
+                }
+              />
+              {ai.aiMode === "claude"
+                ? `AI receptionist live (${ai.model})`
+                : "AI receptionist in fallback mode - set ANTHROPIC_API_KEY to enable Claude"}
+            </p>
+          )}
         </div>
         <div className="flex items-center gap-3">
           <Link

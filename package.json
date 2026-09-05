@@ -11,7 +11,9 @@
     "db:push": "prisma db push",
     "db:seed": "node prisma/seed.mjs",
     "db:studio": "prisma studio",
-    "admin:hash": "node scripts/hash-password.mjs"
+    "admin:hash": "node scripts/hash-password.mjs",
+    "test": "node --test --test-concurrency=1 \"tests/*.test.mjs\"",
+    "test:all": "npm run build && npm test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",

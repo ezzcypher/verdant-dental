@@ -7,6 +7,23 @@ import { loadClinicContext } from "./knowledge";
 import { isUrgent, urgentNotice } from "./urgency";
 import type { ChatTurn, CollectedDetails, ReceptionistResult } from "./types";
 
+/**
+ * Strip anything key-shaped before a message reaches the logs. Provider errors
+ * are not supposed to echo credentials, but logs outlive assumptions and a
+ * serverless log line is not a place to find out otherwise.
+ */
+function redact(s: string): string {
+  return s
+    .replace(/sk-ant-[A-Za-z0-9_-]+/g, "sk-ant-[REDACTED]")
+    .replace(/postgres(?:ql)?:\/\/[^\s"']+/gi, "postgresql://[REDACTED]")
+    .replace(/\b[A-Fa-f0-9]{48,}\b/g, "[REDACTED]");
+}
+
+function describeError(err: unknown): string {
+  if (err instanceof Error) return redact(`${err.name}: ${err.message}`);
+  return redact(String(err));
+}
+
 export interface AnswerArgs {
   history: ChatTurn[];
   userMessage: string;
@@ -36,10 +53,9 @@ export async function answer(args: AnswerArgs): Promise<ReceptionistResult> {
     try {
       result = await runClaude({ ...args, ctx });
     } catch (err) {
-      console.error(
-        "[chat] claude failed, falling back to rules:",
-        err instanceof Error ? `${err.name}: ${err.message}` : String(err),
-      );
+      // Covers every failure mode the brief calls out: missing/invalid key,
+      // 429 rate limit, 5xx, network error, request timeout, and a refusal.
+      console.error("[chat] claude failed, falling back to rules:", describeError(err));
       result = await runFallback({ ...args, ctx });
     }
   } else {
