@@ -182,7 +182,7 @@ export function ConversationsPanel() {
             </div>
 
             {open.appointments.length > 0 && (
-              <div className="border-b border-border bg-primary/10 px-5 py-3 text-[12.5px]">
+              <div className="border-b border-border bg-primary/10 px-5 py-3 text-[13px]">
                 Booked:{" "}
                 {open.appointments
                   .map((a) => `${a.reference} (${a.treatment}, ${a.status})`)

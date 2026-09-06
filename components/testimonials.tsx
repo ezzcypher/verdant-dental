@@ -31,7 +31,7 @@ export function Testimonials() {
         </div>
 
         <Reveal className="mt-8 text-center" delay={120}>
-          <p className="text-[11.5px] italic text-muted-foreground">{TESTIMONIALS_DEMO_NOTE}</p>
+          <p className="text-[12px] italic text-muted-foreground">{TESTIMONIALS_DEMO_NOTE}</p>
         </Reveal>
       </div>
     </section>

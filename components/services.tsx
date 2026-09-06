@@ -28,13 +28,16 @@ export function Services() {
                 <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-foreground">
                   {s.name}
                 </h3>
-                <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 flex-1 text-[14.5px] leading-relaxed text-muted-foreground">
                   {s.blurb}
                 </p>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary">
-                  Learn More
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
+                <div className="mt-6 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary">
+                    Learn More
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                  <span className="text-[12px] text-muted-foreground">{s.priceFrom}</span>
+                </div>
               </Link>
             </Reveal>
           ))}
@@ -43,7 +46,7 @@ export function Services() {
         <Reveal className="mt-12 text-center" delay={120}>
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-[13.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
+            className="inline-flex items-center gap-2 text-[14.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
           >
             Explore All Dental Services
             <ArrowRight className="h-4 w-4" />

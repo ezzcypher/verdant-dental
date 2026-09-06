@@ -69,15 +69,10 @@ const config: Config = {
           from: { transform: "scaleX(0)" },
           to: { transform: "scaleX(1)" },
         },
-        "float-soft": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-6px)" },
-        },
       },
       animation: {
         "fade-up": "fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
         "reveal-line": "reveal-line 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
-        "float-soft": "float-soft 6s ease-in-out infinite",
       },
     },
   },

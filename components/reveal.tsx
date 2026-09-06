@@ -14,16 +14,54 @@ import {
  *
  * SSR / no-JS: children render fully visible (the `.reveal` class is inert
  * until `<html class="js">` is set). With JS + motion allowed, the element
- * starts hidden and fades up the first time it enters the viewport.
- * `prefers-reduced-motion` is handled in globals.css.
+ * fades up the first time it enters the viewport. `prefers-reduced-motion`
+ * is handled in globals.css.
+ *
+ * All instances share ONE IntersectionObserver (registered lazily) rather
+ * than one per component — cheaper on a long page with many reveals.
  */
+
+type Cb = () => void;
+
+let sharedObserver: IntersectionObserver | null = null;
+const callbacks = new WeakMap<Element, Cb>();
+
+function observe(el: Element, cb: Cb) {
+  if (typeof IntersectionObserver === "undefined") {
+    cb();
+    return () => {};
+  }
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            const fn = callbacks.get(e.target);
+            if (fn) {
+              fn();
+              callbacks.delete(e.target);
+              sharedObserver!.unobserve(e.target);
+            }
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+  }
+  callbacks.set(el, cb);
+  sharedObserver.observe(el);
+  return () => {
+    callbacks.delete(el);
+    sharedObserver?.unobserve(el);
+  };
+}
+
 export function Reveal({
   children,
   as: Tag = "div",
   delay = 0,
   variant = "up",
   className = "",
-  amount = 0.15,
 }: {
   children: ReactNode;
   as?: ElementType;
@@ -31,8 +69,6 @@ export function Reveal({
   delay?: number;
   variant?: "up" | "image";
   className?: string;
-  /** IntersectionObserver threshold. */
-  amount?: number;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
@@ -40,27 +76,12 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el || shown) return;
-
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    ) {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
       setShown(true);
       return;
     }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: amount, rootMargin: "0px 0px -8% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [shown, amount]);
+    return observe(el, () => setShown(true));
+  }, [shown]);
 
   const base = variant === "image" ? "reveal-img" : "reveal";
 

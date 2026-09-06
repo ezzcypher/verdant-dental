@@ -38,7 +38,7 @@ export default function InsurancePage() {
                 <h2 className="mt-5 font-display text-lg font-medium tracking-tight text-foreground">
                   {INSURANCE.accepted.title}
                 </h2>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">
+                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">
                   {INSURANCE.accepted.copy}
                 </p>
                 <ul className="mt-4 grid gap-2 text-[13px] text-foreground/80">
@@ -58,7 +58,7 @@ export default function InsurancePage() {
                 <h2 className="mt-5 font-display text-lg font-medium tracking-tight text-foreground">
                   {INSURANCE.payment.title}
                 </h2>
-                <ul className="mt-3 grid gap-2.5 text-[13.5px] text-foreground/80">
+                <ul className="mt-3 grid gap-2.5 text-[14.5px] text-foreground/80">
                   {INSURANCE.payment.items.map((p) => (
                     <li key={p} className="flex items-start gap-2.5">
                       <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" strokeWidth={2.4} />
@@ -75,7 +75,7 @@ export default function InsurancePage() {
                 <h2 className="mt-5 font-display text-lg font-medium tracking-tight text-foreground">
                   {INSURANCE.financing.title}
                 </h2>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">
+                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">
                   {INSURANCE.financing.copy}
                 </p>
               </div>

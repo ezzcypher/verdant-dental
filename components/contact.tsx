@@ -133,7 +133,7 @@ export function Contact() {
           <div className="mt-8">
             <BookingDialog label="Book an Appointment" />
           </div>
-          <p className="mt-4 text-[11.5px] italic text-muted-foreground">
+          <p className="mt-4 text-[12px] italic text-muted-foreground">
             Address and hours shown are demonstration content for this portfolio.
           </p>
         </div>
@@ -169,7 +169,7 @@ export function Contact() {
                   {CLINIC.city}, {CLINIC.region}
                 </span>
               </div>
-              <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1.5 text-[11.5px] font-semibold text-foreground backdrop-blur transition-colors group-hover:text-primary">
+              <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1.5 text-[12px] font-semibold text-foreground backdrop-blur transition-colors group-hover:text-primary">
                 Get Directions
                 <ExternalLink className="h-3.5 w-3.5" />
               </span>
@@ -185,7 +185,7 @@ export function Contact() {
                 <Check className="h-5 w-5" />
               </span>
               <p className="font-display text-xl tracking-tight text-foreground">Message sent.</p>
-              <p className="max-w-sm text-[13.5px] text-muted-foreground">
+              <p className="max-w-sm text-[14.5px] text-muted-foreground">
                 We reply within one business day. For anything time-sensitive, please call the
                 office directly.
               </p>

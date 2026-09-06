@@ -34,9 +34,14 @@ export function FinalCta() {
           >
             <a href={CLINIC.phoneHref}>
               <Phone className="h-4 w-4" strokeWidth={1.9} />
-              Call Our Office
+              Call {CLINIC.phone}
             </a>
           </Button>
+        </Reveal>
+        <Reveal delay={200}>
+          <p className="mt-5 text-[13px] text-primary-foreground/75">
+            New patients welcome · Same-week appointments · Free on-site parking
+          </p>
         </Reveal>
       </div>
     </section>

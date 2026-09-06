@@ -46,7 +46,7 @@ export default async function ServiceDetailPage({
     <PageShell>
       <PageHero
         eyebrow="Dental service"
-        title={service.name}
+        title={`${service.name} in Austin, TX`}
         sub={service.summary}
         image={service.image}
         imageAlt={`${service.name} at Verdant Dental in Austin, Texas`}
@@ -115,14 +115,23 @@ export default async function ServiceDetailPage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-7">
+                <div className="mt-6 flex items-baseline justify-between border-t border-border pt-4">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    Typical investment
+                  </span>
+                  <span className="font-display text-lg tracking-tight text-foreground">
+                    {service.priceFrom}
+                  </span>
+                </div>
+                <div className="mt-5">
                   <BookingDialog label="Book an Appointment" className="w-full" />
                 </div>
                 <p className="mt-3 text-center text-[12px] text-muted-foreground">
                   Or call{" "}
                   <a href="tel:+15125550142" className="font-medium text-foreground hover:text-primary">
                     (512) 555-0142
-                  </a>
+                  </a>{" "}
+                  · we&apos;ll call to confirm
                 </p>
               </div>
             </Reveal>

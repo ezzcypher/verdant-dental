@@ -18,10 +18,10 @@ export function TrustBar() {
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <t.icon className="h-5 w-5" strokeWidth={1.7} />
               </span>
-              <p className="mt-3 text-[13.5px] font-semibold tracking-tight text-foreground">
+              <p className="mt-3 text-[14.5px] font-semibold tracking-tight text-foreground">
                 {t.label}
               </p>
-              <p className="mt-1 max-w-[26ch] text-[12.5px] leading-relaxed text-muted-foreground">
+              <p className="mt-1 max-w-[26ch] text-[13px] leading-relaxed text-muted-foreground">
                 {t.note}
               </p>
             </Reveal>

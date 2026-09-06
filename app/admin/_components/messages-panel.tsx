@@ -86,7 +86,7 @@ export function MessagesPanel() {
                 {m.handled && <Pill tone="green">handled</Pill>}
               </Td>
               <Td>{m.subject ?? "—"}</Td>
-              <Td className="max-w-[320px] whitespace-pre-wrap text-[12.5px] text-muted-foreground">
+              <Td className="max-w-[320px] whitespace-pre-wrap text-[13px] text-muted-foreground">
                 {m.body}
               </Td>
               <Td className="whitespace-nowrap text-[12px] text-muted-foreground">

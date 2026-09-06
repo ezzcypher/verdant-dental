@@ -20,8 +20,8 @@ export default function ServicesIndexPage() {
     <PageShell>
       <PageHero
         eyebrow="Dental services"
-        title="Care for every part of your smile."
-        sub="Routine, restorative and cosmetic dentistry under one roof — so complex cases stay in the building and you keep the same clinician."
+        title="Dental care for every part of your smile — in Austin, TX."
+        sub="Routine, restorative and cosmetic dentistry under one roof in South Austin, so complex cases stay in the building and you keep the same clinician."
         image="/ambience/suite.jpg"
         imageAlt="A calm, naturally lit modern dental treatment room"
         crumbs={[{ label: "Home", href: "/" }, { label: "Services" }]}
@@ -41,13 +41,16 @@ export default function ServicesIndexPage() {
                 <h2 className="mt-6 font-display text-xl font-medium tracking-tight text-foreground">
                   {s.name}
                 </h2>
-                <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 flex-1 text-[14.5px] leading-relaxed text-muted-foreground">
                   {s.summary}
                 </p>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary">
-                  Learn More
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
+                <div className="mt-6 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary">
+                    Learn More
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                  <span className="text-[12px] text-muted-foreground">{s.priceFrom}</span>
+                </div>
               </Link>
             </Reveal>
           ))}

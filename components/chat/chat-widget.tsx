@@ -199,7 +199,7 @@ export function ChatWidget() {
             <div key={i} className={cn("flex", b.role === "user" ? "justify-end" : "justify-start")}>
               <div
                 className={cn(
-                  "max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-[13.5px] leading-relaxed",
+                  "max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-[14.5px] leading-relaxed",
                   b.role === "user"
                     ? "rounded-br-sm bg-foreground text-background"
                     : "rounded-bl-sm bg-secondary text-foreground",
@@ -232,7 +232,7 @@ export function ChatWidget() {
           )}
 
           {error && (
-            <p className="rounded-xl bg-red-50 px-3 py-2 text-[12.5px] text-red-700">{error}</p>
+            <p className="rounded-xl bg-red-50 px-3 py-2 text-[13px] text-red-700">{error}</p>
           )}
 
           {bubbles.length === 1 && !busy && (
@@ -268,7 +268,7 @@ export function ChatWidget() {
               maxLength={2000}
               disabled={busy}
               aria-label="Your message"
-              className="h-11 flex-1 rounded-full border border-border bg-card px-4 text-[13.5px] text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:outline-none disabled:opacity-60"
+              className="h-11 flex-1 rounded-full border border-border bg-card px-4 text-[14.5px] text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:outline-none disabled:opacity-60"
             />
             <button
               type="submit"

@@ -8,9 +8,11 @@ import { z } from "zod";
 
 export const appointmentSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(80),
-  email: z.string().trim().email("Enter a valid email").max(160).optional().or(z.literal("")),
   phone: z.string().trim().min(6, "Enter a valid phone number").max(30),
-  treatment: z.string().trim().min(2, "Choose a treatment").max(80),
+  // Everything below is optional — a shorter form converts better; the front
+  // desk gathers the rest when they call to confirm.
+  email: z.string().trim().email("Enter a valid email").max(160).optional().or(z.literal("")),
+  treatment: z.string().trim().max(80).optional(),
   preferredDate: z.string().trim().max(60).optional(),
   preferredTime: z.string().trim().max(60).optional(),
   note: z.string().trim().max(1000).optional(),

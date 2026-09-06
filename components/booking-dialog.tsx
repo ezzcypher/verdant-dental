@@ -19,7 +19,7 @@ import { appointmentSchema, TREATMENT_OPTIONS } from "@/lib/validations";
 type Status = "idle" | "sending" | "done" | "error";
 
 export function BookingDialog({
-  label = "Book a visit",
+  label = "Book an Appointment",
   variant = "default",
   size = "default",
   className,
@@ -40,19 +40,16 @@ export function BookingDialog({
     const fd = new FormData(form);
     const payload = {
       name: String(fd.get("name") ?? ""),
-      email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
+      email: String(fd.get("email") ?? ""),
       treatment: String(fd.get("treatment") ?? ""),
       preferredDate: String(fd.get("preferredDate") ?? ""),
-      preferredTime: String(fd.get("preferredTime") ?? ""),
       note: String(fd.get("note") ?? ""),
     };
 
     const parsed = appointmentSchema.safeParse(payload);
     if (!parsed.success) {
-      setErrors(
-        parsed.error.flatten().fieldErrors as Record<string, string[] | undefined>,
-      );
+      setErrors(parsed.error.flatten().fieldErrors as Record<string, string[] | undefined>);
       return;
     }
     setErrors({});
@@ -107,13 +104,13 @@ export function BookingDialog({
                   <>
                     Your reference is{" "}
                     <span className="font-medium text-foreground">{reference}</span>. Our front
-                    desk will call within one working day to confirm a time. For anything urgent,
-                    ring us directly.
+                    desk will call within one business day to confirm your time. For anything
+                    urgent, please call the office.
                   </>
                 ) : (
                   <>
-                    Our front desk will call within one working day to confirm a time. For anything
-                    urgent, ring us directly.
+                    Our front desk will call within one business day to confirm your time. For
+                    anything urgent, please call the office.
                   </>
                 )}
               </DialogDescription>
@@ -127,65 +124,62 @@ export function BookingDialog({
             <DialogHeader>
               <DialogTitle>Request an appointment</DialogTitle>
               <DialogDescription>
-                A few details and a preferred window — no account, no deposit.
+                Just your name and number to start — no account, no deposit. We&apos;ll call to
+                confirm a time that works.
               </DialogDescription>
             </DialogHeader>
 
             <form onSubmit={onSubmit} className="grid gap-5" noValidate>
-              <Field label="Full name" error={errors.name?.[0]}>
-                <Input name="name" autoComplete="name" required />
-              </Field>
-
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Email" error={errors.email?.[0]}>
-                  <Input name="email" type="email" autoComplete="email" required />
+                <Field label="Full name" error={errors.name?.[0]} required>
+                  <Input name="name" autoComplete="name" required />
                 </Field>
-                <Field label="Phone" error={errors.phone?.[0]}>
+                <Field label="Phone" error={errors.phone?.[0]} required>
                   <Input name="phone" type="tel" autoComplete="tel" required />
                 </Field>
               </div>
 
-              <Field label="Treatment" error={errors.treatment?.[0]}>
-                <select
-                  name="treatment"
-                  defaultValue=""
-                  required
-                  className="h-12 w-full border-0 border-b border-foreground/20 bg-transparent text-[15px] text-foreground focus-visible:border-foreground focus-visible:outline-none"
-                >
-                  <option value="" disabled>
-                    Select…
-                  </option>
-                  {TREATMENT_OPTIONS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
+              <Field label="Email (optional)" error={errors.email?.[0]}>
+                <Input name="email" type="email" autoComplete="email" />
               </Field>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Preferred date" error={errors.preferredDate?.[0]}>
-                  <Input name="preferredDate" placeholder="e.g. next Tuesday" />
+                <Field label="What's it for? (optional)" error={errors.treatment?.[0]}>
+                  <select
+                    name="treatment"
+                    defaultValue=""
+                    className="h-12 w-full border-0 border-b border-foreground/20 bg-transparent text-[15px] text-foreground focus-visible:border-foreground focus-visible:outline-none"
+                  >
+                    <option value="">I&apos;m not sure yet</option>
+                    {TREATMENT_OPTIONS.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
                 </Field>
-                <Field label="Preferred time" error={errors.preferredTime?.[0]}>
-                  <Input name="preferredTime" placeholder="e.g. mornings" />
+                <Field label="Preferred day (optional)" error={errors.preferredDate?.[0]}>
+                  <Input name="preferredDate" placeholder="e.g. next Tuesday, mornings" />
                 </Field>
               </div>
 
-              <Field label="Anything we should know?" error={errors.note?.[0]}>
-                <Textarea name="note" rows={3} />
+              <Field label="Anything we should know? (optional)" error={errors.note?.[0]}>
+                <Textarea name="note" rows={2} />
               </Field>
 
               {status === "error" && (
                 <p className="text-sm text-red-600">
-                  Something went wrong sending that. Please try again, or call us.
+                  Something went wrong sending that. Please try again, or call the office.
                 </p>
               )}
 
               <Button type="submit" size="lg" disabled={status === "sending"}>
-                {status === "sending" ? "Sending…" : "Send request"}
+                {status === "sending" ? "Sending…" : "Request Appointment"}
                 {status !== "sending" && <ArrowRight />}
               </Button>
+              <p className="text-center text-[12px] text-muted-foreground">
+                New patients welcome · We reply within one business day · No obligation
+              </p>
             </form>
           </>
         )}
@@ -197,16 +191,19 @@ export function BookingDialog({
 function Field({
   label,
   error,
+  required,
   children,
 }: {
   label: string;
   error?: string;
+  required?: boolean;
   children: ReactNode;
 }) {
   return (
     <label className="grid gap-2">
-      <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
         {label}
+        {required && <span className="ml-1 text-primary">*</span>}
       </span>
       {children}
       {error && <span className="text-xs text-red-600">{error}</span>}

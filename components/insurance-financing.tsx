@@ -31,7 +31,7 @@ export function InsuranceFinancing() {
                 <h3 className="mt-5 font-display text-lg font-medium tracking-tight text-foreground">
                   {c.title}
                 </h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">{c.copy}</p>
+                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">{c.copy}</p>
               </div>
             </Reveal>
           ))}
@@ -40,12 +40,12 @@ export function InsuranceFinancing() {
         <Reveal className="mt-10 flex flex-col items-center gap-4 text-center" delay={120}>
           <Link
             href="/insurance"
-            className="inline-flex items-center gap-2 text-[13.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
+            className="inline-flex items-center gap-2 text-[14.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
           >
             See Insurance &amp; Payment Details
             <ArrowRight className="h-4 w-4" />
           </Link>
-          <p className="text-[11.5px] italic text-muted-foreground">{INSURANCE.demoNote}</p>
+          <p className="text-[12px] italic text-muted-foreground">{INSURANCE.demoNote}</p>
         </Reveal>
       </div>
     </section>

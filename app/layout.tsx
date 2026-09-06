@@ -45,11 +45,13 @@ export const metadata: Metadata = {
     siteName: "Verdant Family & Cosmetic Dentistry",
     title: "Your Smile, Thoughtfully Cared For. | Verdant Dental — Austin, TX",
     description: DESCRIPTION,
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Verdant Family & Cosmetic Dentistry, Austin TX" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Verdant Family & Cosmetic Dentistry — Austin, TX",
     description: DESCRIPTION,
+    images: ["/og.jpg"],
   },
   robots: { index: true, follow: true },
   icons: { icon: "/icon.svg" },

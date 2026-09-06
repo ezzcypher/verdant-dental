@@ -60,8 +60,9 @@ export const NAV = [
   { label: "Contact", href: "/#contact" },
 ];
 
-/* Reveal-hero background: two modern dental scenes, ending on care. */
-export const REVEAL_IMAGES = ["/ambience/operatory.jpg", "/ambience/chairside.jpg"];
+/* Full-bleed hero background. Overwrite public/hero/verdant-hero.jpg with a
+   wide dental image that leaves clear copy space on the left. */
+export const REVEAL_IMAGES = ["/hero/verdant-hero.jpg"];
 
 /* ── Trust bar (no numeric claims) ───────────────────────────────── */
 
@@ -94,6 +95,8 @@ export interface Service {
   icon: LucideIcon;
   blurb: string;
   image: string;
+  /** Representative starting fee (illustrative, mirrors the price list). */
+  priceFrom: string;
   summary: string;
   whatItIs: string;
   whoFor: string[];
@@ -110,6 +113,7 @@ export const SERVICES: Service[] = [
     icon: Smile,
     blurb: "Comprehensive exams, cleanings and everyday restorative care for the whole family.",
     image: "/ambience/suite.jpg",
+    priceFrom: "exams from $89",
     summary:
       "Routine and restorative care that keeps small issues small — exams, cleanings, fillings, crowns and more, all in one place.",
     whatItIs:
@@ -144,6 +148,7 @@ export const SERVICES: Service[] = [
     icon: ShieldCheck,
     blurb: "Cleanings, sealants and early screenings that help you avoid bigger treatment later.",
     image: "/ambience/instruments.jpg",
+    priceFrom: "cleanings from $120",
     summary:
       "The care that pays for itself — professional cleanings, gum health monitoring, sealants and oral-cancer screenings on every visit.",
     whatItIs:
@@ -177,7 +182,8 @@ export const SERVICES: Service[] = [
     nav: "Cosmetic",
     icon: Sparkles,
     blurb: "Whitening, bonding and porcelain veneers, planned around your face — never overdone.",
-    image: "/ambience/operatory.jpg",
+    image: "/ambience/chairside.jpg",
+    priceFrom: "from $390",
     summary:
       "Subtle, natural-looking improvements — from a brighter shade to a full smile design with porcelain veneers.",
     whatItIs:
@@ -210,7 +216,8 @@ export const SERVICES: Service[] = [
     nav: "Implants",
     icon: Bone,
     blurb: "A stable, natural-feeling replacement for a missing tooth — planned with 3D imaging.",
-    image: "/ambience/suite.jpg",
+    image: "/ambience/operatory.jpg",
+    priceFrom: "from $2,600",
     summary:
       "A long-term way to replace one tooth or several, using guided planning so the result looks and functions like your own.",
     whatItIs:
@@ -243,7 +250,8 @@ export const SERVICES: Service[] = [
     nav: "Whitening",
     icon: Sun,
     blurb: "Professional whitening — in-office or custom take-home trays — with less sensitivity.",
-    image: "/ambience/chairside.jpg",
+    image: "/ambience/lounge.jpg",
+    priceFrom: "from $390",
     summary:
       "A brighter, even shade using professional-strength gel, applied safely with your gums protected.",
     whatItIs:
@@ -277,6 +285,7 @@ export const SERVICES: Service[] = [
     icon: Zap,
     blurb: "Same-day relief for pain, swelling or a broken tooth — call us first thing.",
     image: "/ambience/instruments.jpg",
+    priceFrom: "from $95",
     summary:
       "Time held open every working day for urgent problems, so you are seen quickly and comfortably.",
     whatItIs:

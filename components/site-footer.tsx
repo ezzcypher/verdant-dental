@@ -14,12 +14,12 @@ export function SiteFooter() {
               {CLINIC.name}
               <span className="text-primary">.</span>
             </p>
-            <p className="mt-3 max-w-xs text-[13.5px] leading-relaxed text-background/60">
+            <p className="mt-3 max-w-xs text-[14.5px] leading-relaxed text-background/60">
               Modern family and cosmetic dentistry in South Austin. Comfortable care, clear
               guidance, and one clinician who knows your smile.
             </p>
 
-            <address className="mt-6 grid gap-2 not-italic text-[13.5px] text-background/70">
+            <address className="mt-6 grid gap-2 not-italic text-[14.5px] text-background/70">
               <span className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={1.8} />
                 {CLINIC.address}
@@ -50,7 +50,7 @@ export function SiteFooter() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
                 {col.title}
               </p>
-              <ul className="mt-4 grid gap-2.5 text-[13.5px]">
+              <ul className="mt-4 grid gap-2.5 text-[14.5px]">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <Link href={l.href} className="text-background/70 hover:text-primary">
@@ -64,7 +64,7 @@ export function SiteFooter() {
         </div>
 
         {/* Hours */}
-        <div className="mt-12 grid gap-2 border-t border-background/12 pt-8 text-[12.5px] text-background/60 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-2 border-t border-background/12 pt-8 text-[13px] text-background/60 sm:grid-cols-2 lg:grid-cols-4">
           {CLINIC.hours.map(([d, h]) => (
             <div key={d} className="flex justify-between gap-4 sm:block">
               <span className="font-medium text-background/80">{d}</span>

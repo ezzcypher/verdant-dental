@@ -34,6 +34,11 @@ export function CtaBand({
             </a>
           </Button>
         </Reveal>
+        <Reveal delay={200}>
+          <p className="mt-5 text-[13px] text-muted-foreground">
+            New patients welcome · We call to confirm · No obligation
+          </p>
+        </Reveal>
       </div>
     </section>
   );

@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         name: d.name,
         phone: d.phone,
         email: d.email ? d.email : null,
-        treatment: d.treatment,
+        treatment: d.treatment && d.treatment.length >= 2 ? d.treatment : "General appointment",
         preferredDate: d.preferredDate ?? null,
         preferredTime: d.preferredTime ?? null,
         note: d.note ?? null,

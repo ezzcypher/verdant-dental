@@ -112,7 +112,7 @@ export default function NewPatientsPage() {
               <p className="mt-3 text-[14px] leading-relaxed text-muted-foreground">
                 {INSURANCE.accepted.copy} {INSURANCE.financing.copy}
               </p>
-              <p className="mt-4 text-[11.5px] italic text-muted-foreground">{INSURANCE.demoNote}</p>
+              <p className="mt-4 text-[12px] italic text-muted-foreground">{INSURANCE.demoNote}</p>
               <a
                 href="/insurance"
                 className="mt-5 inline-flex text-[13px] font-semibold uppercase tracking-[0.13em] text-primary hover:underline"

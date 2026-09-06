@@ -191,7 +191,9 @@ export default function ScrollRevealHero({
         const el = imgRefs.current[i];
         if (!el) continue;
         const d = Math.abs(p - i * span);
-        const o = clamp(1 - d / span, 0, 1);
+        // A lone frame must stay fully opaque (there is nothing to cross-dissolve
+        // into) — otherwise a single-image hero fades to black as you scrub.
+        const o = n === 1 ? 1 : clamp(1 - d / span, 0, 1);
         el.style.opacity = String(o);
         el.style.transform = `scale(${(1.09 - o * 0.09).toFixed(4)}) translateY(${((1 - o) * 6).toFixed(2)}px)`;
       }
@@ -272,6 +274,9 @@ export default function ScrollRevealHero({
           alt=""
           aria-hidden
           draggable={false}
+          {...(i === 0
+            ? { fetchPriority: "high" as const, loading: "eager" as const, decoding: "async" as const }
+            : { loading: "lazy" as const, decoding: "async" as const })}
           style={{
             position: "absolute",
             inset: 0,
@@ -392,16 +397,18 @@ export default function ScrollRevealHero({
           position: "absolute",
           right: "clamp(16px, 4vw, 40px)",
           bottom: "clamp(20px, 4vw, 34px)",
-          zIndex: 3,
-          background: "transparent",
-          border: "1px solid rgba(246,246,244,0.4)",
-          color: "rgba(246,246,244,0.9)",
+          zIndex: 8,
+          background: "rgba(255,255,255,0.14)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+          border: "1px solid rgba(255,255,255,0.55)",
+          color: "#ffffff",
           fontFamily: "var(--font-inter), system-ui, sans-serif",
-          fontSize: "11px",
-          fontWeight: 500,
-          letterSpacing: "0.16em",
+          fontSize: "12px",
+          fontWeight: 600,
+          letterSpacing: "0.14em",
           textTransform: "uppercase",
-          padding: "9px 16px",
+          padding: "11px 20px",
           borderRadius: "999px",
           cursor: "pointer",
         }}

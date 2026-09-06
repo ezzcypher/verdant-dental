@@ -26,7 +26,7 @@ export function PatientJourney() {
                 <h3 className="mt-4 font-display text-lg font-medium tracking-tight text-foreground">
                   {s.title}
                 </h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">
+                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">
                   {s.copy}
                 </p>
                 {i < JOURNEY.length - 1 && (
@@ -44,7 +44,7 @@ export function PatientJourney() {
           <BookingDialog label="Book Your First Visit" size="lg" />
           <Link
             href="/new-patients"
-            className="inline-flex items-center gap-2 text-[13.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
+            className="inline-flex items-center gap-2 text-[14.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
           >
             New Patient Details
             <ArrowRight className="h-4 w-4" />

@@ -63,25 +63,30 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className={cn(
-                "text-[13.5px] font-medium tracking-wide transition-colors hover:text-primary",
-                solid ? "text-foreground/75" : "text-white/85",
-              )}
-            >
-              {n.label}
-            </Link>
-          ))}
+          {NAV.map((n) => {
+            const active = n.href.startsWith("/") && !n.href.includes("#") && pathname === n.href;
+            return (
+              <Link
+                key={n.href}
+                href={n.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "text-[14px] font-medium tracking-wide transition-colors hover:text-primary",
+                  active && "text-primary",
+                  !active && (solid ? "text-foreground/75" : "text-white/85"),
+                )}
+              >
+                {n.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
           <a
             href={CLINIC.phoneHref}
             className={cn(
-              "flex items-center gap-1.5 text-[13.5px] font-medium transition-colors hover:text-primary",
+              "flex items-center gap-1.5 text-[14px] font-medium transition-colors hover:text-primary",
               solid ? "text-foreground/75" : "text-white/85",
             )}
           >
@@ -91,15 +96,30 @@ export function SiteHeader() {
           <BookingDialog label="Book Appointment" size="sm" />
         </div>
 
-        <button
-          type="button"
-          aria-label="Open menu"
-          aria-expanded={openMenu}
-          onClick={() => setOpenMenu(true)}
-          className={cn("lg:hidden", solid ? "text-foreground" : "text-white")}
-        >
-          <Menu className="h-6 w-6" />
-        </button>
+        <div className="flex items-center gap-1 lg:hidden">
+          <a
+            href={CLINIC.phoneHref}
+            aria-label={`Call the office at ${CLINIC.phone}`}
+            className={cn(
+              "flex h-10 w-10 items-center justify-center rounded-full",
+              solid ? "text-foreground" : "text-white",
+            )}
+          >
+            <Phone className="h-5 w-5" strokeWidth={1.9} />
+          </a>
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={openMenu}
+            onClick={() => setOpenMenu(true)}
+            className={cn(
+              "flex h-10 w-10 items-center justify-center rounded-full",
+              solid ? "text-foreground" : "text-white",
+            )}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
       </div>
 
       {openMenu && (
