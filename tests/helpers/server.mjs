@@ -52,9 +52,13 @@ export async function startApp({ port, env = {} }) {
 
 /** POST /api/chat with the same-origin header the route requires. */
 export async function chat(base, message, sessionId) {
+  // A fresh client IP per call so the shared in-memory rate limiter (keyed on
+  // IP) never makes one test's request count spill into another's. Sessions are
+  // tracked by publicId, independent of IP, so multi-turn tests are unaffected.
+  const ip = `10.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
   const res = await fetch(`${base}/api/chat`, {
     method: "POST",
-    headers: { "content-type": "application/json", origin: base },
+    headers: { "content-type": "application/json", origin: base, "x-forwarded-for": ip },
     body: JSON.stringify(sessionId ? { message, sessionId } : { message }),
   });
   const data = await res.json().catch(() => null);

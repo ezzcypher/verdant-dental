@@ -2,20 +2,23 @@
  * Static clinic facts the receptionist can always state, even with an empty
  * knowledge base. Anything the clinic edits day-to-day lives in KnowledgeItem
  * instead — this is only the handful of things that are structural.
+ *
+ * DEMO CONTENT: Verdant is a portfolio demonstration. The address and phone
+ * number below are placeholders (Austin, TX; 555 exchange).
  */
 export const CLINIC = {
   name: "Verdant",
-  fullName: "Verdant — Dental Atelier",
-  address: "24 Lindenhof Passage, City Centre",
-  phone: "+1 (555) 018-2245",
-  email: "front.desk@verdant.dental",
+  fullName: "Verdant Family & Cosmetic Dentistry",
+  address: "1400 South Congress Avenue, Suite 210, Austin, TX 78704",
+  phone: "(512) 555-0142",
+  email: "hello@verdantdental.com",
   hours: [
-    { days: "Monday – Thursday", time: "8:00 – 19:00" },
-    { days: "Friday", time: "8:00 – 16:00" },
-    { days: "Saturday", time: "9:00 – 14:00" },
+    { days: "Monday – Thursday", time: "8:00 AM – 5:00 PM" },
+    { days: "Friday", time: "8:00 AM – 2:00 PM" },
+    { days: "Saturday", time: "By appointment" },
     { days: "Sunday", time: "Closed" },
   ],
-  emergencyLine: "+1 (555) 018-2245",
+  emergencyLine: "(512) 555-0142",
 } as const;
 
 export function hoursAsText(): string {

@@ -1,36 +1,43 @@
-import ScrollRevealHero from "@/components/ui/scroll-reveal-hero";
 import { SiteHeader } from "@/components/site-header";
-import { Statement } from "@/components/statement";
+import { Hero } from "@/components/hero";
+import { TrustBar } from "@/components/trust-bar";
 import { Intro } from "@/components/intro";
 import { Services } from "@/components/services";
-import { Space } from "@/components/space";
+import { WhyChoose } from "@/components/why-choose";
+import { Practice } from "@/components/practice";
 import { Team } from "@/components/team";
-import { Pricing } from "@/components/pricing";
+import { PatientJourney } from "@/components/patient-journey";
+import { InsuranceFinancing } from "@/components/insurance-financing";
+import { Testimonials } from "@/components/testimonials";
+import { Faq } from "@/components/faq";
 import { Contact } from "@/components/contact";
+import { FinalCta } from "@/components/final-cta";
 import { SiteFooter } from "@/components/site-footer";
 import { ChatWidget } from "@/components/chat/chat-widget";
-import { REVEAL_IMAGES } from "@/components/site-data";
+import { MobileCta } from "@/components/mobile-cta";
 
 export default function HomePage() {
   return (
     <>
       <SiteHeader />
-      <main>
-        <ScrollRevealHero
-          images={REVEAL_IMAGES}
-          title="Verdant"
-          tagline="Every detail considered. Every visit calm."
-        />
-        <Statement />
+      <main id="main">
+        <Hero />
+        <TrustBar />
         <Intro />
         <Services />
-        <Space />
+        <WhyChoose />
+        <Practice />
         <Team />
-        <Pricing />
+        <PatientJourney />
+        <InsuranceFinancing />
+        <Testimonials />
+        <Faq />
         <Contact />
+        <FinalCta />
       </main>
       <SiteFooter />
       <ChatWidget />
+      <MobileCta />
     </>
   );
 }

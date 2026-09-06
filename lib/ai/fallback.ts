@@ -443,8 +443,8 @@ export async function runFallback(args: RunFallbackArgs): Promise<ReceptionistRe
 
       case "location":
         reply = has(norm, "parking", "park")
-          ? `We are at ${CLINIC.address}. Street parking is metered, and the Lindenhof underground car park two doors down is validated for two hours with a treatment appointment.`
-          : `We are at ${CLINIC.address}, about five minutes from the central transit stop. Call ${CLINIC.phone} if you need directions on the day.`;
+          ? `We are at ${CLINIC.address}. There is free patient parking on site, plus metered street parking on South Congress.`
+          : `We are at ${CLINIC.address}, on South Congress in South Austin. Call ${CLINIC.phone} if you need directions on the day.`;
         break;
 
       case "contact":

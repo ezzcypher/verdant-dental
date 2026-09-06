@@ -1,21 +1,34 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { PageShell } from "@/components/page-shell";
+import { PageHero } from "@/components/page-hero";
+import { CtaBand } from "@/components/cta-band";
 import { Reveal } from "@/components/reveal";
-import { SectionHeading } from "@/components/section-heading";
 import { SERVICES } from "@/components/site-data";
 
-export function Services() {
-  return (
-    <section id="services" className="section bg-secondary/50">
-      <div className="container-x">
-        <SectionHeading
-          eyebrow="Dental services"
-          title="Comprehensive care, all under one roof."
-          lead="From routine check-ups to full smile makeovers — planned carefully, explained plainly, and never rushed."
-        />
+export const metadata: Metadata = {
+  title: "Dental Services",
+  description:
+    "General, preventive, cosmetic, implant, whitening and emergency dentistry at Verdant in Austin, TX. Patient-friendly care, planned clearly.",
+  alternates: { canonical: "/services" },
+};
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+export default function ServicesIndexPage() {
+  return (
+    <PageShell>
+      <PageHero
+        eyebrow="Dental services"
+        title="Care for every part of your smile."
+        sub="Routine, restorative and cosmetic dentistry under one roof — so complex cases stay in the building and you keep the same clinician."
+        image="/ambience/suite.jpg"
+        imageAlt="A calm, naturally lit modern dental treatment room"
+        crumbs={[{ label: "Home", href: "/" }, { label: "Services" }]}
+      />
+
+      <section className="section bg-background">
+        <div className="container-x grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
             <Reveal key={s.slug} delay={(i % 3) * 80}>
               <Link
@@ -25,11 +38,11 @@ export function Services() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
                   <s.icon className="h-6 w-6" strokeWidth={1.6} />
                 </span>
-                <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-foreground">
+                <h2 className="mt-6 font-display text-xl font-medium tracking-tight text-foreground">
                   {s.name}
-                </h3>
+                </h2>
                 <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-muted-foreground">
-                  {s.blurb}
+                  {s.summary}
                 </p>
                 <span className="mt-6 inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary">
                   Learn More
@@ -39,17 +52,9 @@ export function Services() {
             </Reveal>
           ))}
         </div>
+      </section>
 
-        <Reveal className="mt-12 text-center" delay={120}>
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 text-[13.5px] font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:text-primary"
-          >
-            Explore All Dental Services
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </Reveal>
-      </div>
-    </section>
+      <CtaBand />
+    </PageShell>
   );
 }

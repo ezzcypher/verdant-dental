@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { MessageCircle, X, Send, Check, Phone } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { CHAT_QUICK_ACTIONS, CLINIC } from "@/components/site-data";
 
 /**
  * Floating AI receptionist. Talks to POST /api/chat, which persists the whole
@@ -30,14 +31,7 @@ interface Bubble {
 const SESSION_KEY = "vd-chat-session";
 
 const GREETING =
-  "Hello — I'm the virtual receptionist at Verdant. I can answer questions about treatments, prices and opening hours, or book you an appointment. What can I help with?";
-
-const SUGGESTIONS = [
-  "How much is teeth whitening?",
-  "What are your opening hours?",
-  "I'd like to book a check-up",
-  "I have toothache",
-];
+  "Hi! I'm the Verdant reception assistant. I can help you book an appointment, find a service, or answer questions about new patients, insurance and the office. How can I help?";
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -119,7 +113,7 @@ export function ChatWidget() {
         },
       ]);
     } catch {
-      setError("Connection lost. Please try again, or call us on +1 (555) 018-2245.");
+      setError(`Connection lost. Please try again, or call us on ${CLINIC.phone}.`);
     } finally {
       setBusy(false);
     }
@@ -141,7 +135,9 @@ export function ChatWidget() {
         aria-controls="vd-chat-panel"
         aria-label={open ? "Close the chat" : "Chat with our receptionist"}
         className={cn(
-          "fixed bottom-5 right-5 z-[70] flex h-14 w-14 items-center justify-center rounded-full",
+          "fixed right-4 z-[70] flex h-14 w-14 items-center justify-center rounded-full",
+          // Sits above the sticky mobile action bar on phones.
+          "bottom-24 lg:bottom-5",
           "bg-primary text-primary-foreground shadow-[0_12px_40px_-8px_rgba(20,20,25,0.45)]",
           "transition-transform duration-200 hover:scale-105 focus-visible:outline-none",
           "focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2",
@@ -165,11 +161,12 @@ export function ChatWidget() {
         aria-label="Chat with the Verdant receptionist"
         aria-modal="false"
         className={cn(
-          "fixed z-[60] flex flex-col overflow-hidden border border-border bg-card shadow-2xl",
+          "fixed z-[75] flex flex-col overflow-hidden border border-border bg-card shadow-2xl",
           "animate-fade-up",
-          // Sits above the launcher so the round button stays tappable.
-          "inset-x-3 bottom-24 top-3 rounded-2xl",
-          "sm:inset-auto sm:bottom-24 sm:right-5 sm:top-auto sm:h-[min(600px,calc(100vh-8rem))] sm:w-[min(400px,calc(100vw-2.5rem))]",
+          // Mobile: a full-screen sheet that covers the launcher and the sticky bar.
+          "inset-0 rounded-none",
+          // Desktop: a floating panel above the launcher.
+          "sm:inset-auto sm:bottom-6 sm:right-5 sm:h-[min(620px,calc(100dvh-7rem))] sm:w-[min(400px,calc(100vw-2.5rem))] sm:rounded-2xl",
         )}
       >
         {/* Header */}
@@ -239,17 +236,23 @@ export function ChatWidget() {
           )}
 
           {bubbles.length === 1 && !busy && (
-            <div className="flex flex-wrap gap-2 pt-1">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => void send(s)}
-                  className="rounded-full border border-border bg-background px-3 py-1.5 text-[12px] text-foreground/80 transition-colors hover:border-primary hover:text-primary"
-                >
-                  {s}
-                </button>
-              ))}
+            <div className="pt-1">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Quick options
+              </p>
+              <div className="flex flex-col gap-2">
+                {CHAT_QUICK_ACTIONS.map((a) => (
+                  <button
+                    key={a.label}
+                    type="button"
+                    onClick={() => void send(a.message)}
+                    className="flex items-center justify-between rounded-xl border border-border bg-background px-3.5 py-2.5 text-left text-[13px] font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
+                  >
+                    {a.label}
+                    <Send className="h-3.5 w-3.5 shrink-0 opacity-40" />
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -276,9 +279,9 @@ export function ChatWidget() {
               <Send className="h-4 w-4" strokeWidth={1.9} />
             </button>
           </div>
-          <p className="mt-2 flex items-center justify-center gap-1.5 text-[10.5px] text-muted-foreground">
-            <Phone className="h-3 w-3" />
-            Urgent? Call +1 (555) 018-2245 · not a substitute for clinical advice
+          <p className="mt-2 flex items-center justify-center gap-1.5 text-center text-[10.5px] text-muted-foreground">
+            <Phone className="h-3 w-3 shrink-0" />
+            Urgent? Call {CLINIC.phone} · demo assistant, not medical advice
           </p>
         </form>
       </div>

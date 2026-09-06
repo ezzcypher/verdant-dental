@@ -28,6 +28,8 @@ export interface ScrollRevealHeroProps {
   scrubDistance?: number;
   /** Accent used for the progress bar + hint. */
   accent?: string;
+  /** CSS selector the "Skip intro" control scrolls to (defaults to the next sibling). */
+  skipTo?: string;
   className?: string;
 }
 
@@ -45,6 +47,7 @@ export default function ScrollRevealHero({
   scrollHint = "SCROLL",
   scrubDistance = 2600,
   accent = "#98BF0A",
+  skipTo,
   className,
 }: ScrollRevealHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -239,8 +242,11 @@ export default function ScrollRevealHero({
     try {
       sessionStorage.setItem("vd-intro-seen", "1");
     } catch {}
-    const next = sectionRef.current?.nextElementSibling as HTMLElement | null;
-    (next ?? document.body).scrollIntoView({ behavior: "smooth", block: "start" });
+    const target =
+      (skipTo && (document.querySelector(skipTo) as HTMLElement | null)) ||
+      (sectionRef.current?.closest("section")?.nextElementSibling as HTMLElement | null) ||
+      (sectionRef.current?.nextElementSibling as HTMLElement | null);
+    (target ?? document.body).scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (

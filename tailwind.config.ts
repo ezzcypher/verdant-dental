@@ -11,9 +11,13 @@ const config: Config = {
     container: {
       center: true,
       padding: "1.5rem",
-      screens: { "2xl": "1280px" },
+      screens: { "2xl": "1200px" },
     },
     extend: {
+      boxShadow: {
+        card: "0 1px 2px -1px rgb(36 34 32 / 0.06), 0 12px 32px -16px rgb(36 34 32 / 0.18)",
+        lift: "0 2px 4px -2px rgb(36 34 32 / 0.08), 0 28px 60px -28px rgb(36 34 32 / 0.28)",
+      },
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",
@@ -65,10 +69,15 @@ const config: Config = {
           from: { transform: "scaleX(0)" },
           to: { transform: "scaleX(1)" },
         },
+        "float-soft": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
         "reveal-line": "reveal-line 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "float-soft": "float-soft 6s ease-in-out infinite",
       },
     },
   },

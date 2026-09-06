@@ -210,7 +210,7 @@ describe("fallback to the rules engine", () => {
 describe("rules engine behaviour", () => {
   test("answers a dental FAQ", async () => {
     const r = await chat(rulesApp.base, "where are you and is there parking?");
-    assert.match(r.reply, /Lindenhof/i);
+    assert.match(r.reply, /South Congress|parking/i);
   });
 
   test("quotes a price that matches the database", async () => {
@@ -242,7 +242,7 @@ describe("rules engine behaviour", () => {
     const priced = await chat(rulesApp.base, "how much is whitening", sid);
     const whitening = await prisma.treatment.findFirst({ where: { name: "Teeth Whitening" } });
     assert.ok(
-      priced.reply.includes(whitening.priceFrom) || /open|Lindenhof/i.test(priced.reply),
+      priced.reply.includes(whitening.priceFrom) || /open|South Congress|Austin/i.test(priced.reply),
       `a price question must be answered, got: ${priced.reply}`,
     );
   });
@@ -313,7 +313,7 @@ describe("urgency detection", () => {
     test(`flags: "${msg}"`, async () => {
       const r = await chat(rulesApp.base, msg);
       assert.equal(r.urgent, true);
-      assert.match(r.reply, /018-2245/, "must surface the emergency number");
+      assert.match(r.reply, /512.*555.0142/, "must surface the emergency number");
     });
   }
 
@@ -329,6 +329,6 @@ describe("urgency detection", () => {
     mock.setScript([text("Here is some general information.")]);
     const r = await chat(claudeApp.base, "I knocked out my front tooth");
     assert.equal(r.urgent, true);
-    assert.match(r.reply, /018-2245/);
+    assert.match(r.reply, /512.*555.0142/);
   });
 });

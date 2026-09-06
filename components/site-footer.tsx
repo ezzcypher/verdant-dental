@@ -1,102 +1,89 @@
-import Image from "next/image";
-import { Instagram, Facebook, Linkedin, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { Instagram, Facebook, MapPin, Phone, Mail } from "lucide-react";
 
-import { NAV, CLINIC } from "@/components/site-data";
-import { BookingDialog } from "@/components/booking-dialog";
+import { CLINIC, FOOTER_COLUMNS, LEGAL_LINKS } from "@/components/site-data";
 
 export function SiteFooter() {
   return (
-    <footer className="relative isolate overflow-hidden">
-      {/* Pic 7 — full-bleed footer background */}
-      <Image
-        src="/footer-bg.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="-z-20 object-cover object-right"
-      />
-      {/* Readability scrim: solid canvas on the left, clearing to the artwork on the right */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/90 to-background/25 md:to-transparent"
-      />
+    <footer className="border-t border-border bg-foreground text-background">
+      <div className="container-x py-16 md:py-20">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+          {/* Brand + NAP */}
+          <div>
+            <p className="font-display text-2xl font-medium tracking-tight">
+              {CLINIC.name}
+              <span className="text-primary">.</span>
+            </p>
+            <p className="mt-3 max-w-xs text-[13.5px] leading-relaxed text-background/60">
+              Modern family and cosmetic dentistry in South Austin. Comfortable care, clear
+              guidance, and one clinician who knows your smile.
+            </p>
 
-      <div className="container-x py-20 md:py-28">
-        <div className="max-w-xl">
-          <p className="font-display text-5xl font-medium tracking-tightest text-foreground md:text-6xl">
-            {CLINIC.name}
-            <span className="text-primary">.</span>
-          </p>
-          <p className="mt-4 max-w-xs text-[14px] leading-relaxed text-foreground/70">
-            A dental atelier in the centre of the city. Precision work, designed
-            around calm.
-          </p>
-          <div className="mt-7">
-            <BookingDialog label="Book a visit" />
+            <address className="mt-6 grid gap-2 not-italic text-[13.5px] text-background/70">
+              <span className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={1.8} />
+                {CLINIC.address}
+              </span>
+              <a href={CLINIC.phoneHref} className="flex items-center gap-2.5 hover:text-primary">
+                <Phone className="h-4 w-4 shrink-0 text-primary" strokeWidth={1.8} />
+                {CLINIC.phone}
+              </a>
+              <a href={CLINIC.emailHref} className="flex items-center gap-2.5 hover:text-primary">
+                <Mail className="h-4 w-4 shrink-0 text-primary" strokeWidth={1.8} />
+                {CLINIC.email}
+              </a>
+            </address>
+
+            <div className="mt-6 flex gap-4 text-background/55">
+              <a href="#" aria-label="Instagram (demo)" className="hover:text-primary">
+                <Instagram className="h-5 w-5" strokeWidth={1.6} />
+              </a>
+              <a href="#" aria-label="Facebook (demo)" className="hover:text-primary">
+                <Facebook className="h-5 w-5" strokeWidth={1.6} />
+              </a>
+            </div>
           </div>
 
-          <div className="mt-14 grid gap-10 sm:grid-cols-2">
-            <nav>
-              <p className="eyebrow">Explore</p>
-              <ul className="mt-4 grid gap-2.5 text-[14px]">
-                {NAV.map((n) => (
-                  <li key={n.href}>
-                    <a
-                      href={n.href}
-                      className="text-foreground/75 hover:text-primary"
-                    >
-                      {n.label}
-                    </a>
+          {/* Link columns */}
+          {FOOTER_COLUMNS.map((col) => (
+            <nav key={col.title} aria-label={col.title}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
+                {col.title}
+              </p>
+              <ul className="mt-4 grid gap-2.5 text-[13.5px]">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-background/70 hover:text-primary">
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </nav>
-
-            <div>
-              <p className="eyebrow">Visit</p>
-              <address className="mt-4 not-italic text-[14px] leading-relaxed text-foreground/75">
-                {CLINIC.address}
-                <br />
-                <a
-                  href={`tel:${CLINIC.phone.replace(/[^+\d]/g, "")}`}
-                  className="hover:text-primary"
-                >
-                  {CLINIC.phone}
-                </a>
-                <br />
-                <a href={`mailto:${CLINIC.email}`} className="hover:text-primary">
-                  {CLINIC.email}
-                </a>
-              </address>
-              <div className="mt-5 flex gap-4 text-foreground/55">
-                <a href="#" aria-label="Instagram" className="hover:text-primary">
-                  <Instagram className="h-5 w-5" strokeWidth={1.5} />
-                </a>
-                <a href="#" aria-label="Facebook" className="hover:text-primary">
-                  <Facebook className="h-5 w-5" strokeWidth={1.5} />
-                </a>
-                <a href="#" aria-label="LinkedIn" className="hover:text-primary">
-                  <Linkedin className="h-5 w-5" strokeWidth={1.5} />
-                </a>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-16 flex max-w-xl flex-col gap-3 border-t border-foreground/15 pt-8 text-[12px] text-foreground/60 sm:flex-row sm:items-center sm:justify-between">
+        {/* Hours */}
+        <div className="mt-12 grid gap-2 border-t border-background/12 pt-8 text-[12.5px] text-background/60 sm:grid-cols-2 lg:grid-cols-4">
+          {CLINIC.hours.map(([d, h]) => (
+            <div key={d} className="flex justify-between gap-4 sm:block">
+              <span className="font-medium text-background/80">{d}</span>
+              <span className="tabular-nums sm:mt-0.5 sm:block">{h}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-background/12 pt-6 text-[12px] text-background/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {CLINIC.full}.
+            © {new Date().getFullYear()} {CLINIC.full}. Portfolio demonstration — not a real
+            practice.
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-foreground">
-              Patient terms
-            </a>
-            <a href="#top" className="flex items-center gap-1 hover:text-foreground">
-              Back to top <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
+          <div className="flex gap-5">
+            {LEGAL_LINKS.map((l) => (
+              <a key={l.label} href={l.href} className="hover:text-background">
+                {l.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
