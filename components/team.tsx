@@ -62,6 +62,7 @@ export function Team() {
                 {d.credentials}
               </p>
               <p className="mt-1 text-[13px] leading-snug text-background/60">{d.specialty}</p>
+              <p className="mt-1.5 text-[12.5px] text-background/45">{d.experience}</p>
               {/* Underline extends under the name on hover. */}
               <span
                 aria-hidden

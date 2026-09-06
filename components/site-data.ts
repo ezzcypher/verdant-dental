@@ -388,6 +388,8 @@ export interface Provider {
   name: string;
   credentials: string;
   specialty: string;
+  /** Years in practice — illustrative, in keeping with TEAM_DEMO_NOTE. */
+  experience: string;
   intro: string;
   photo: string;
 }
@@ -397,6 +399,7 @@ export const TEAM: Provider[] = [
     name: "Dr. Emily Carter",
     credentials: "DDS",
     specialty: "General & Cosmetic Dentistry",
+    experience: "15 years in practice",
     intro:
       "Dr. Carter focuses on comprehensive, patient-centered care and conservative cosmetic work — small changes, planned carefully, that still look like you.",
     photo: "/doctors/emily-carter.jpg",
@@ -405,6 +408,7 @@ export const TEAM: Provider[] = [
     name: "Dr. Marcus Bennett",
     credentials: "DMD",
     specialty: "Restorative Dentistry & Implants",
+    experience: "26 years in practice",
     intro:
       "Dr. Bennett handles the practice's implant and full-mouth restorative cases, planning each one with 3D imaging so the result is predictable.",
     photo: "/doctors/marcus-bennett.jpg",
@@ -413,6 +417,7 @@ export const TEAM: Provider[] = [
     name: "Dr. Priya Nair",
     credentials: "DDS",
     specialty: "Endodontics & Tooth Preservation",
+    experience: "8 years in practice",
     intro:
       "Dr. Nair specializes in saving teeth that others might give up on, using magnification and gentle technique for root canal therapy.",
     photo: "/doctors/mei-lin.jpg",
@@ -421,6 +426,7 @@ export const TEAM: Provider[] = [
     name: "Dr. Julian Reyes",
     credentials: "DDS",
     specialty: "Oral Surgery & Sedation",
+    experience: "12 years in practice",
     intro:
       "Dr. Reyes covers surgical extractions and sedation dentistry, and is the person nervous patients ask for by name.",
     photo: "/doctors/julian-reyes.jpg",
@@ -429,6 +435,7 @@ export const TEAM: Provider[] = [
     name: "Dr. Hannah Cole",
     credentials: "DMD",
     specialty: "Family & Preventive Dentistry",
+    experience: "9 years in practice",
     intro:
       "Dr. Cole sees families across every age, with a light, unhurried touch that makes a child's first visit a non-event.",
     photo: "/doctors/anna-weber.jpg",
@@ -511,6 +518,67 @@ export const FEES: { item: string; price: string }[] = [
   { item: "Porcelain veneer (per tooth)", price: "from $850" },
   { item: "Dental implant (single, all-inclusive)", price: "from $2,600" },
 ];
+
+/* In-house membership plans — the practice's own product for patients
+   without dental insurance. Not insurance, and not a real offer. */
+export interface MembershipPlan {
+  name: string;
+  tagline: string;
+  monthly: number;
+  yearly: number;
+  features: string[];
+  featured?: boolean;
+}
+
+export const MEMBERSHIP = {
+  eyebrow: "Membership plans",
+  heading: "No insurance? Pay one flat fee.",
+  lead: "No deductible, no annual maximum, no claim forms. Routine care is covered for a flat fee, and everything else comes with a standing discount.",
+  badge: "Most chosen",
+  note: "Membership plans are illustrative placeholder content for this portfolio demo. A dental membership plan is not insurance and does not replace it.",
+  plans: [
+    {
+      name: "Preventive",
+      tagline: "For healthy adults staying ahead of it.",
+      monthly: 29,
+      yearly: 290,
+      features: [
+        "Two cleanings a year",
+        "Two exams with digital X-rays",
+        "One emergency visit",
+        "15% off any further treatment",
+        "No deductible or annual maximum",
+      ],
+    },
+    {
+      name: "Complete",
+      tagline: "For patients who need a little more.",
+      monthly: 45,
+      yearly: 450,
+      featured: true,
+      features: [
+        "Everything in Preventive",
+        "Three cleanings a year",
+        "Fluoride and oral-cancer screening",
+        "20% off any further treatment",
+        "Priority emergency scheduling",
+      ],
+    },
+    {
+      name: "Family",
+      tagline: "Two adults and up to two children.",
+      monthly: 89,
+      yearly: 890,
+      features: [
+        "Everything in Complete",
+        "Covers two adults, two children",
+        "Children's sealants included",
+        "20% off orthodontic consults",
+        "One renewal date for the household",
+      ],
+    },
+  ] as MembershipPlan[],
+};
 
 export const FEES_DEMO_NOTE =
   "Fee ranges are illustrative placeholder content for this portfolio demo and are not an offer of treatment. Your own estimate is prepared after an examination.";
