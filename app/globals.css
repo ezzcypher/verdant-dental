@@ -162,6 +162,18 @@
   html.js .reveal-img.is-visible {
     clip-path: inset(0 0 0 0);
   }
+
+  /* A photo plate *inside* a Reveal. Driven by the parent's is-visible so a
+     card and its photo can never desync — nesting a second Reveal to animate
+     the photo left the inner one unobserved and the photo clipped forever. */
+  html.js .reveal .reveal-plate {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.9s var(--ease-silk);
+    transition-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+  }
+  html.js .reveal.is-visible .reveal-plate {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -172,7 +184,8 @@
     transition: none;
   }
   html.js .reveal,
-  html.js .reveal-img {
+  html.js .reveal-img,
+  html.js .reveal .reveal-plate {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;

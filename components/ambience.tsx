@@ -31,12 +31,7 @@ export function Ambience() {
         <ul className="mt-14 grid gap-8 md:grid-cols-3 md:gap-6">
           {AMBIENCE.plates.map((p, i) => (
             <Reveal as="li" key={p.src} delay={i * 110} className="group">
-              <Reveal
-                variant="image"
-                as="figure"
-                delay={i * 110 + 120}
-                className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-muted shadow-card transition-shadow duration-500 ease-silk group-hover:shadow-lift"
-              >
+              <figure className="reveal-plate relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-muted shadow-card transition-shadow duration-500 ease-silk group-hover:shadow-lift">
                 <Image
                   src={p.src}
                   alt={p.alt}
@@ -56,7 +51,7 @@ export function Ambience() {
                   aria-hidden
                   className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-primary transition-transform duration-700 ease-silk group-hover:scale-x-100"
                 />
-              </Reveal>
+              </figure>
               <p className="mt-5 text-[14.5px] leading-relaxed text-muted-foreground">{p.copy}</p>
             </Reveal>
           ))}

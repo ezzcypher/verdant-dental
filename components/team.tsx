@@ -35,12 +35,7 @@ export function Team() {
         <ul className="mt-14 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-4">
           {TEAM.map((d, i) => (
             <Reveal as="li" key={d.name} delay={(i % 5) * 80} className="group">
-              <Reveal
-                variant="image"
-                as="div"
-                delay={(i % 5) * 80 + 110}
-                className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-background/10 transition-shadow duration-500 ease-silk group-hover:shadow-[0_26px_54px_-26px_rgba(0,0,0,0.75)]"
-              >
+              <div className="reveal-plate relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-background/10 transition-shadow duration-500 ease-silk group-hover:shadow-[0_26px_54px_-26px_rgba(0,0,0,0.75)]">
                 <Image
                   src={d.photo}
                   alt={`${d.name}, ${d.credentials} — ${d.specialty} at Verdant Dental`}
@@ -58,7 +53,7 @@ export function Team() {
                   aria-hidden
                   className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-primary transition-transform duration-700 ease-silk group-hover:scale-x-100"
                 />
-              </Reveal>
+              </div>
 
               <h3 className="mt-4 font-display text-[16.5px] font-medium leading-tight tracking-tight">
                 {d.name}
