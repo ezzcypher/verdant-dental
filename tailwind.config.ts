@@ -69,10 +69,16 @@ const config: Config = {
           from: { transform: "scaleX(0)" },
           to: { transform: "scaleX(1)" },
         },
+        /* Slow, continuous Ken Burns drift for portrait photography. */
+        kenburns: {
+          "0%": { transform: "scale(1.06)" },
+          "100%": { transform: "scale(1.14) translate3d(-2%, -1.5%, 0)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
         "reveal-line": "reveal-line 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
+        kenburns: "kenburns 22s ease-in-out infinite alternate",
       },
     },
   },

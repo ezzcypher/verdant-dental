@@ -31,18 +31,33 @@ export function Team() {
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM.map((d, i) => (
-            <Reveal as="li" key={d.name} delay={(i % 3) * 80} className="group">
-              <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-background/[0.06] ring-1 ring-background/10">
-                <div className="relative aspect-[5/4] w-full overflow-hidden bg-background/10">
+            <Reveal as="li" key={d.name} delay={(i % 3) * 90} className="group">
+              <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-background/[0.06] ring-1 ring-background/10 transition-[transform,background-color,box-shadow] duration-500 ease-silk group-hover:bg-background/[0.09] group-hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55)] motion-safe:group-hover:-translate-y-1.5">
+                <Reveal
+                  variant="image"
+                  as="div"
+                  delay={(i % 3) * 90 + 130}
+                  className="relative aspect-[5/4] w-full overflow-hidden bg-background/10"
+                >
                   <Image
                     src={d.photo}
                     alt={`${d.name}, ${d.credentials} — ${d.specialty} at Verdant Dental`}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover object-[50%_18%] saturate-[1.03] transition-transform duration-700 ease-silk group-hover:scale-[1.03]"
+                    style={{ animationDelay: `${i * -3}s` }}
+                    className="object-cover object-[50%_18%] saturate-[1.03] transition-[filter] duration-700 ease-silk group-hover:brightness-[1.04] group-hover:saturate-[1.12] motion-safe:animate-kenburns"
                   />
-                  <span className="absolute left-0 right-0 top-0 h-[3px] origin-left scale-x-0 bg-primary transition-transform duration-500 ease-silk group-hover:scale-x-100" />
-                </div>
+                  {/* Warm floor gradient so the name plate below reads cleanly against the photo edge. */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-foreground/40 to-transparent"
+                  />
+                  {/* Accent bar draws across the top of the photo on hover. */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-primary transition-transform duration-700 ease-silk group-hover:scale-x-100"
+                  />
+                </Reveal>
                 <div className="flex flex-1 flex-col p-6">
                   <h3 className="font-display text-[19px] font-medium leading-tight tracking-tight">
                     {d.name}
@@ -50,7 +65,12 @@ export function Team() {
                       {d.credentials}
                     </span>
                   </h3>
-                  <p className="mt-1 text-[13px] text-background/60">{d.specialty}</p>
+                  {/* Underline extends under the name on hover. */}
+                  <span
+                    aria-hidden
+                    className="mt-2 block h-px w-8 origin-left bg-primary/40 transition-all duration-500 ease-silk group-hover:w-14 group-hover:bg-primary"
+                  />
+                  <p className="mt-2 text-[13px] text-background/60">{d.specialty}</p>
                   <p className="mt-3 text-[14.5px] leading-relaxed text-background/75">{d.intro}</p>
                 </div>
               </article>

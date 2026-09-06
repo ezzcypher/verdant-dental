@@ -30,6 +30,8 @@ export interface ScrollRevealHeroProps {
   accent?: string;
   /** CSS selector the "Skip intro" control scrolls to (defaults to the next sibling). */
   skipTo?: string;
+  /** object-position for the background image(s). */
+  objectPosition?: string;
   className?: string;
 }
 
@@ -48,6 +50,7 @@ export default function ScrollRevealHero({
   scrubDistance = 2600,
   accent = "#98BF0A",
   skipTo,
+  objectPosition = "center",
   className,
 }: ScrollRevealHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -283,6 +286,7 @@ export default function ScrollRevealHero({
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition,
             opacity: reduced ? (i === images.length - 1 ? 1 : 0) : i === 0 ? 1 : 0,
             transformOrigin: "center center",
             willChange: "opacity, transform",

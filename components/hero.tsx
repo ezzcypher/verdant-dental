@@ -26,6 +26,7 @@ export function Hero() {
         scrubDistance={1400}
         accent="#3C6A50"
         skipTo="#trust"
+        objectPosition="50% 30%"
       />
 
       <div className="pointer-events-none absolute inset-0 z-[6] flex items-center">
