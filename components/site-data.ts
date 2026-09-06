@@ -60,9 +60,13 @@ export const NAV = [
   { label: "Contact", href: "/#contact" },
 ];
 
-/* Full-bleed hero background. Overwrite public/hero/verdant-hero.jpg with a
-   wide dental image that leaves clear copy space on the left. */
-export const REVEAL_IMAGES = ["/hero/verdant-hero.jpg"];
+/* Full-bleed hero reveal sequence. Frame 1 is what loads first; scrolling
+   cross-dissolves through to the last frame, then releases the page. Swap
+   either file in place (same path) to change the art with no code change. */
+export const REVEAL_IMAGES = [
+  "/hero/verdant-tooth.jpg", // landscape, centred
+  "/hero/verdant-hero.jpg", // portrait chairside, framed high
+];
 
 /* ── Trust bar (no numeric claims) ───────────────────────────────── */
 
@@ -495,6 +499,9 @@ export const FEES: { item: string; price: string }[] = [
   { item: "Dental implant (single, all-inclusive)", price: "from $2,600" },
 ];
 
+export const FEES_DEMO_NOTE =
+  "Fee ranges are illustrative placeholder content for this portfolio demo and are not an offer of treatment. Your own estimate is prepared after an examination.";
+
 /* ── Testimonials (illustrative demo) ────────────────────────────── */
 
 export interface Testimonial {
@@ -571,6 +578,7 @@ export const FOOTER_COLUMNS: { title: string; links: { label: string; href: stri
     title: "Patients",
     links: [
       { label: "New Patients", href: "/new-patients" },
+      { label: "Fees & Pricing", href: "/#pricing" },
       { label: "Insurance & Financing", href: "/insurance" },
       { label: "Book an Appointment", href: "/#book" },
       { label: "Contact", href: "/#contact" },

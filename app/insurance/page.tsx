@@ -6,7 +6,7 @@ import { PageHero } from "@/components/page-hero";
 import { CtaBand } from "@/components/cta-band";
 import { Faq } from "@/components/faq";
 import { Reveal } from "@/components/reveal";
-import { INSURANCE, FEES, FAQ } from "@/components/site-data";
+import { INSURANCE, FEES, FEES_DEMO_NOTE, FAQ } from "@/components/site-data";
 
 export const metadata: Metadata = {
   title: "Insurance & Financing",
@@ -104,10 +104,7 @@ export default function InsurancePage() {
               </div>
             ))}
           </dl>
-          <p className="mt-4 text-[12px] italic text-muted-foreground">
-            Fee ranges are illustrative demonstration content and do not represent an offer of
-            treatment.
-          </p>
+          <p className="mt-4 text-[12px] italic text-muted-foreground">{FEES_DEMO_NOTE}</p>
         </div>
       </section>
 

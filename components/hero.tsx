@@ -9,8 +9,10 @@ import { HERO, REVEAL_IMAGES, CLINIC } from "@/components/site-data";
 const REASSURANCE = ["New patients welcome", "Same-week appointments", "We call to confirm"];
 
 /**
- * Homepage hero. Full-bleed dental image (public/hero/verdant-hero.jpg) behind a
- * patient-focused headline in the left copy space. The scroll-reveal chrome
+ * Homepage hero. A two-frame full-bleed reveal (REVEAL_IMAGES) behind a
+ * patient-focused headline in the left copy space: it opens on the tooth
+ * study and cross-dissolves to the chairside photo as you scroll, then
+ * hands scrolling back to the page. The scroll-reveal chrome
  * (scroll-lock, progress, "Skip intro", disabled under reduced-motion) is kept
  * as the intro treatment; the headline, CTAs and phone are visible and tappable
  * from the first frame.
@@ -23,10 +25,10 @@ export function Hero() {
         title=""
         tagline=""
         scrollHint="Scroll"
-        scrubDistance={1400}
+        scrubDistance={1800}
         accent="#3C6A50"
         skipTo="#trust"
-        objectPosition="50% 30%"
+        objectPosition={["center", "50% 28%"]}
       />
 
       <div className="pointer-events-none absolute inset-0 z-[6] flex items-center">

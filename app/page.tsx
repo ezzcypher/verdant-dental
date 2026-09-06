@@ -6,6 +6,7 @@ import { Services } from "@/components/services";
 import { WhyChoose } from "@/components/why-choose";
 import { Practice } from "@/components/practice";
 import { Team } from "@/components/team";
+import { Pricing } from "@/components/pricing";
 import { PatientJourney } from "@/components/patient-journey";
 import { InsuranceFinancing } from "@/components/insurance-financing";
 import { Testimonials } from "@/components/testimonials";
@@ -28,6 +29,7 @@ export default function HomePage() {
         <WhyChoose />
         <Practice />
         <Team />
+        <Pricing />
         <PatientJourney />
         <InsuranceFinancing />
         <Testimonials />

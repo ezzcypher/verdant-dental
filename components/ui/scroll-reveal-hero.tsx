@@ -30,8 +30,12 @@ export interface ScrollRevealHeroProps {
   accent?: string;
   /** CSS selector the "Skip intro" control scrolls to (defaults to the next sibling). */
   skipTo?: string;
-  /** object-position for the background image(s). */
-  objectPosition?: string;
+  /**
+   * object-position for the background image(s). Pass one value for all
+   * frames, or an array to frame each frame independently (the reveal
+   * sequence often mixes landscape and portrait sources).
+   */
+  objectPosition?: string | string[];
   className?: string;
 }
 
@@ -267,6 +271,9 @@ export default function ScrollRevealHero({
       }}
     >
       {images.map((src, i) => (
+        // Every frame loads up front — they all sit in the viewport and have to
+        // be decoded before the first scroll cross-dissolves through them; only
+        // the first frame is the LCP candidate.
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={src + i}
@@ -279,14 +286,16 @@ export default function ScrollRevealHero({
           draggable={false}
           {...(i === 0
             ? { fetchPriority: "high" as const, loading: "eager" as const, decoding: "async" as const }
-            : { loading: "lazy" as const, decoding: "async" as const })}
+            : { fetchPriority: "low" as const, loading: "eager" as const, decoding: "async" as const })}
           style={{
             position: "absolute",
             inset: 0,
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition,
+            objectPosition: Array.isArray(objectPosition)
+              ? objectPosition[i] ?? "center"
+              : objectPosition,
             opacity: reduced ? (i === images.length - 1 ? 1 : 0) : i === 0 ? 1 : 0,
             transformOrigin: "center center",
             willChange: "opacity, transform",
