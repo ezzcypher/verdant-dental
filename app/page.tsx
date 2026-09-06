@@ -4,7 +4,7 @@ import { TrustBar } from "@/components/trust-bar";
 import { Intro } from "@/components/intro";
 import { Services } from "@/components/services";
 import { WhyChoose } from "@/components/why-choose";
-import { Practice } from "@/components/practice";
+import { Ambience } from "@/components/ambience";
 import { Team } from "@/components/team";
 import { Pricing } from "@/components/pricing";
 import { PatientJourney } from "@/components/patient-journey";
@@ -27,7 +27,7 @@ export default function HomePage() {
         <Intro />
         <Services />
         <WhyChoose />
-        <Practice />
+        <Ambience />
         <Team />
         <Pricing />
         <PatientJourney />

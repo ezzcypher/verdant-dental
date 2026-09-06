@@ -352,21 +352,34 @@ export const WHY_CHOOSE: Principle[] = [
   },
 ];
 
-/* ── The practice (office tour) ──────────────────────────────────── */
+/* ── Ambience (mid-page interior band) ───────────────────────────── */
 
-export const PRACTICE = {
-  eyebrow: "The practice",
-  heading: "A practice that doesn't feel like one.",
-  copy: [
-    "Natural light on every operatory, sound kept low, and warm materials instead of the usual clinical white.",
-    "Between patients the room resets completely — sterilized instruments laid out, surfaces wiped, nothing of the last visit left to see.",
-    "Every operatory runs the same equipment and the same protocol, so a hand-off between our providers happens down a hallway, not across town.",
+export const AMBIENCE = {
+  eyebrow: "Inside the practice",
+  heading: "Quieter than you remember.",
+  lead: "Most people who avoid the dentist are avoiding a memory — the sound, the waiting, the not knowing what's happening. We built the room around that.",
+  plates: [
+    {
+      src: "/ambience/operatory.jpg",
+      alt: "A modern dental operatory with a treatment chair, overhead light and a wall-mounted screen",
+      caption: "The treatment room",
+      copy: "One patient at a time, with the screen turned toward you. If we're looking at something, you're looking at it too.",
+    },
+    {
+      src: "/ambience/chairside.jpg",
+      alt: "A dentist working chairside with a patient in a treatment chair",
+      caption: "Chairside",
+      copy: "Nothing begins until you know what it is and why. Numbing first, checked twice, and a hand signal that stops everything.",
+    },
+    {
+      src: "/ambience/instruments.jpg",
+      alt: "A sterile tray of dental handpieces, scalers and a curing light beside a treatment chair",
+      caption: "The set-up",
+      copy: "Digital scanning instead of putty trays, and handpieces far quieter than the ones you're bracing for.",
+    },
   ],
-  plates: {
-    portrait: { src: "/ambience/suite.jpg", alt: "A calm, naturally lit modern dental treatment room" },
-    wide: { src: "/ambience/operatory.jpg", alt: "A modern dental operatory with a treatment chair and overhead light" },
-    closing: { src: "/ambience/lounge.jpg", alt: "The welcoming front-of-house and waiting area" },
-  },
+  closing:
+    "The room resets completely between patients — instruments laid out fresh, surfaces wiped, nothing of the last visit left to see.",
 };
 
 /* ── Team (illustrative demo providers) ──────────────────────────── */
@@ -386,7 +399,7 @@ export const TEAM: Provider[] = [
     specialty: "General & Cosmetic Dentistry",
     intro:
       "Dr. Carter focuses on comprehensive, patient-centered care and conservative cosmetic work — small changes, planned carefully, that still look like you.",
-    photo: "/doctors/anna-weber.jpg",
+    photo: "/doctors/emily-carter.jpg",
   },
   {
     name: "Dr. Marcus Bennett",
@@ -394,7 +407,7 @@ export const TEAM: Provider[] = [
     specialty: "Restorative Dentistry & Implants",
     intro:
       "Dr. Bennett handles the practice's implant and full-mouth restorative cases, planning each one with 3D imaging so the result is predictable.",
-    photo: "/doctors/adrian-vale.jpg",
+    photo: "/doctors/marcus-bennett.jpg",
   },
   {
     name: "Dr. Priya Nair",
@@ -410,7 +423,7 @@ export const TEAM: Provider[] = [
     specialty: "Oral Surgery & Sedation",
     intro:
       "Dr. Reyes covers surgical extractions and sedation dentistry, and is the person nervous patients ask for by name.",
-    photo: "/doctors/samir-haddad.jpg",
+    photo: "/doctors/julian-reyes.jpg",
   },
   {
     name: "Dr. Hannah Cole",
@@ -418,7 +431,7 @@ export const TEAM: Provider[] = [
     specialty: "Family & Preventive Dentistry",
     intro:
       "Dr. Cole sees families across every age, with a light, unhurried touch that makes a child's first visit a non-event.",
-    photo: "/doctors/luca-moretti.jpg",
+    photo: "/doctors/anna-weber.jpg",
   },
 ];
 
